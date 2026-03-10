@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html>
-<head>
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Colombara.org</title>
-</head>
-<body>
-    <h1>Welcome to Colombara.org</h1>
-    <p>Coming soon...</p>
-</body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/scripture.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Colombara.org</h1>
+        <!-- Optional subtitle: add text inside the <p> below if desired. -->
+        <p class="subtitle"></p>
+      </header>
+      <p id="verse" class="fade-in">Loading...</p>
+      <p id="citation" class="fade-in"></p>
+      <div id="status"></div>
+    </main>
+
+    <button class="nav-button nav-prev" type="button" aria-label="Previous scripture">&larr;</button>
+    <button class="nav-button nav-next" type="button" aria-label="Next scripture">&rarr;</button>
+
+    <script src="assets/js/scripture-rotator.js"></script>
+  </body>
 </html>
