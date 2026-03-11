@@ -1,4 +1,4 @@
-﻿const DEFAULT_DELAY_MS = 6000;
+﻿const DEFAULT_DELAY_MS = 8000;
 
 function parseCsv(text) {
   const rows = [];
