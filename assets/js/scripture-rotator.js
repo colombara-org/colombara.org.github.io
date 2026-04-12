@@ -1,4 +1,6 @@
-﻿const DEFAULT_DELAY_MS = 8000;
+const DEFAULT_DELAY_MS = 8000;
+const FIXED_START_REFERENCE = 'Psalm 27:4';
+const FIXED_END_REFERENCE = 'Psalm 27:8';
 
 function parseCsv(text) {
   const rows = [];
@@ -63,36 +65,35 @@ function parseDelayMs() {
   return Math.max(2000, Math.floor(value * 1000));
 }
 
-function parseStartIndex(total) {
-  const params = new URLSearchParams(window.location.search);
-  const raw = params.get('start');
-  if (!raw) {
-    return 0;
-  }
-
-  const value = Number(raw);
-  if (!Number.isFinite(value) || value < 0) {
-    return 0;
-  }
-
-  return Math.floor(value) % total;
-}
-
-function shouldShuffle() {
-  const params = new URLSearchParams(window.location.search);
-  const raw = params.get('random');
-  if (!raw) {
-    return false;
-  }
-
-  return raw === '1' || raw.toLowerCase() === 'true' || raw === 'yes';
-}
-
 function shuffleInPlace(items) {
   for (let i = items.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     [items[i], items[j]] = [items[j], items[i]];
   }
+}
+
+function normalizeReference(reference) {
+  return reference.trim().toLowerCase();
+}
+
+function buildDisplayOrder(entries) {
+  const startKey = normalizeReference(FIXED_START_REFERENCE);
+  const endKey = normalizeReference(FIXED_END_REFERENCE);
+  const startEntry = entries.find((entry) => normalizeReference(entry.reference) === startKey);
+  const endEntry = entries.find((entry) => normalizeReference(entry.reference) === endKey);
+
+  if (!startEntry || !endEntry) {
+    return [...entries];
+  }
+
+  const middleEntries = entries.filter((entry) => {
+    const key = normalizeReference(entry.reference);
+    return key !== startKey && key !== endKey;
+  });
+
+  shuffleInPlace(middleEntries);
+
+  return [startEntry, ...middleEntries, endEntry];
 }
 
 function updateStatus(text) {
@@ -102,14 +103,14 @@ function updateStatus(text) {
   }
 }
 
-function formatCitation(citation, translation) {
+function formatCitation(reference, translation) {
   if (translation) {
-    return `${citation} (${translation})`;
+    return `${reference} (${translation})`;
   }
-  return citation;
+  return reference;
 }
 
-function setVerse(reference, verse, citation, translation) {
+function setVerse(reference, verse, translation) {
   const verseEl = document.getElementById('verse');
   const citeEl = document.getElementById('citation');
 
@@ -120,7 +121,7 @@ function setVerse(reference, verse, citation, translation) {
 
   window.setTimeout(() => {
     verseEl.textContent = verse;
-    citeEl.textContent = formatCitation(citation || reference, translation);
+    citeEl.textContent = formatCitation(reference, translation);
     verseEl.classList.remove('fade-out');
     citeEl.classList.remove('fade-out');
     verseEl.classList.add('fade-in');
@@ -145,34 +146,34 @@ async function init() {
 
   const referenceIndex = headers.indexOf('reference');
   const textIndex = headers.indexOf('text');
-  const citationIndex = headers.indexOf('citation');
   const translationIndex = headers.indexOf('translation');
+
+  if (referenceIndex === -1 || textIndex === -1) {
+    updateStatus('Scripture data is missing required columns.');
+    return;
+  }
 
   const entries = dataRows
     .map((row) => ({
       reference: row[referenceIndex] || '',
       verse: normalizeVerse(row[textIndex] || ''),
-      citation: row[citationIndex] || '',
       translation: row[translationIndex] || '',
     }))
-    .filter((entry) => entry.verse.trim().length > 0);
+    .filter((entry) => entry.reference.trim().length > 0 && entry.verse.trim().length > 0);
 
   if (entries.length === 0) {
     updateStatus('No scripture entries found.');
     return;
   }
 
-  if (shouldShuffle()) {
-    shuffleInPlace(entries);
-  }
-
-  let index = parseStartIndex(entries.length);
+  const orderedEntries = buildDisplayOrder(entries);
+  let index = 0;
   const delayMs = parseDelayMs();
 
   const showIndex = (nextIndex) => {
-    index = (nextIndex + entries.length) % entries.length;
-    const entry = entries[index];
-    setVerse(entry.reference, entry.verse, entry.citation, entry.translation);
+    index = (nextIndex + orderedEntries.length) % orderedEntries.length;
+    const entry = orderedEntries[index];
+    setVerse(entry.reference, entry.verse, entry.translation);
   };
 
   updateStatus('');
