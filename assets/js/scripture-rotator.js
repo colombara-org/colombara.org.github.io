@@ -1,4 +1,4 @@
-const DEFAULT_DELAY_MS = 8000;
+const DEFAULT_DELAY_MS = 6000;
 const FIXED_START_REFERENCE = 'Psalm 27:4';
 const FIXED_END_REFERENCE = 'Psalm 27:8';
 
@@ -179,28 +179,27 @@ async function init() {
   updateStatus('');
   showIndex(index);
 
-  window.setInterval(() => {
-    showIndex(index + 1);
-  }, delayMs);
+let intervalId = window.setInterval(() => showIndex(index + 1), delayMs);
+
+  function resetTimer() {
+    window.clearInterval(intervalId);
+    intervalId = window.setInterval(() => showIndex(index + 1), delayMs);
+  }
 
   const prevButton = document.querySelector('.nav-prev');
   const nextButton = document.querySelector('.nav-next');
 
   if (prevButton) {
-    prevButton.addEventListener('click', () => showIndex(index - 1));
+    prevButton.addEventListener('click', () => { showIndex(index - 1); resetTimer(); });
   }
 
   if (nextButton) {
-    nextButton.addEventListener('click', () => showIndex(index + 1));
+    nextButton.addEventListener('click', () => { showIndex(index + 1); resetTimer(); });
   }
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowLeft') {
-      showIndex(index - 1);
-    }
-    if (event.key === 'ArrowRight') {
-      showIndex(index + 1);
-    }
+    if (event.key === 'ArrowLeft') { showIndex(index - 1); resetTimer(); }
+    if (event.key === 'ArrowRight') { showIndex(index + 1); resetTimer(); }
   });
 }
 
