@@ -1,14 +1,12 @@
 /* Bible Memorization App — style.css */
 
 :root {
-  --bg-1:   #0f1114;
-  --bg-2:   #1b1f25;
+  --bg:     #12161c;
   --ink:    #f2efe8;
   --muted:  #b9b0a2;
   --accent: #e3c38b;
-  --panel:  rgba(20, 24, 30, 0.86);
-  --card:   rgba(10, 13, 18, 0.55);
-  --shadow: 0 24px 70px rgba(6, 8, 10, 0.5);
+  --panel:  #1c2129;
+  --card:   #161b22;
   --border: rgba(227, 195, 139, 0.12);
   --radius: 10px;
 }
@@ -26,11 +24,7 @@ html {
 body {
   font-family: "Cormorant Garamond", "Garamond", "Georgia", serif;
   color: var(--ink);
-  background:
-    radial-gradient(900px 520px at 15% 20%, rgba(255, 255, 255, 0.06), transparent 60%),
-    radial-gradient(800px 520px at 85% 15%, rgba(255, 255, 255, 0.04), transparent 70%),
-    linear-gradient(120deg, var(--bg-1), var(--bg-2));
-  background-attachment: fixed;
+  background: var(--bg);
   min-height: 100vh;
   padding: 2rem 1rem 3rem;
 }
@@ -39,10 +33,8 @@ body {
   max-width: 680px;
   margin: 0 auto;
   background: var(--panel);
-  backdrop-filter: blur(6px);
   border-radius: 18px;
   padding: 48px 40px 40px;
-  box-shadow: var(--shadow);
   border: 1px solid var(--border);
 }
 
@@ -50,7 +42,7 @@ h1 {
   font-family: "Montserrat", "Gill Sans", "Trebuchet MS", sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  font-size: 0.72rem;
+  font-size: 1rem;
   color: var(--accent);
   text-align: center;
   margin-bottom: 1.75rem;
