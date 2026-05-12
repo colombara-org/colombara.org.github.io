@@ -26,10 +26,10 @@ const STORAGE = {
 const INSTRUCTIONS = {
   memorize: 'Read the verse out loud 10 times, including the verse reference each time. '
     + 'Look carefully at each word as you read. Pay attention to the rhythm and flow. '
-    + 'Then click Hide, cover your eyes, and recite the verse from memory 10 times — '
+    + 'Then click `Hide` and recite the verse from memory 10 times — '
     + 'always beginning with the verse reference. Glance at the text if you need to, then keep going.',
   check: 'Say the verse reference, then recite the verse from memory. '
-    + 'When you\'re ready, click Show to check yourself.',
+    + 'When you\'re ready, click `Show` to check yourself.',
 };
 
 // ── State ─────────────────────────────────────────────────────────────────────
