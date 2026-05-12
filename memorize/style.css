@@ -292,6 +292,26 @@ select:focus {
 
 /* ── Responsive ────────────────────────────────────────────────────────────── */
 
+.home-link {
+  position: fixed;
+  bottom: 24px;
+  left: 28px;
+  font-family: "Montserrat", "Gill Sans", "Trebuchet MS", sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  opacity: 0.55;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.home-link:hover,
+.home-link:focus-visible {
+  opacity: 1;
+  color: var(--accent);
+}
+
 @media (max-width: 640px) {
   body        { padding: 1rem 0.75rem 2.5rem; }
   .container  { padding: 32px 20px 28px; border-radius: 14px; }
