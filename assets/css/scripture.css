@@ -169,10 +169,10 @@ header .subtitle {
   }
 }
 
-.intermission-link {
+.intermission-link,
+.memorize-link {
   position: fixed;
   bottom: 24px;
-  right: 28px;
   font-family: "Montserrat", "Gill Sans", "Trebuchet MS", sans-serif;
   font-size: 0.8rem;
   letter-spacing: 0.1em;
@@ -183,8 +183,13 @@ header .subtitle {
   transition: opacity 0.2s ease, color 0.2s ease;
 }
 
+.intermission-link { right: 28px; }
+.memorize-link     { left: 28px; }
+
 .intermission-link:hover,
-.intermission-link:focus-visible {
+.intermission-link:focus-visible,
+.memorize-link:hover,
+.memorize-link:focus-visible {
   opacity: 1;
   color: var(--accent);
 }
