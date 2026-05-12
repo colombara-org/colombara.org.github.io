@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bible Memorization</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Bible Memorization</h1>
+
+    <!-- Filter dropdowns — populated dynamically from verses.csv -->
+    <div class="dropdowns">
+      <div class="dropdown-group">
+        <label for="book-select">Book</label>
+        <select id="book-select"></select>
+      </div>
+      <div class="dropdown-group">
+        <label for="chapter-select">Chapter</label>
+        <select id="chapter-select"></select>
+      </div>
+      <div class="dropdown-group">
+        <label for="verse-select">Verse</label>
+        <select id="verse-select"></select>
+      </div>
+      <div class="dropdown-group">
+        <label for="translation-select">Translation</label>
+        <select id="translation-select"></select>
+      </div>
+    </div>
+
+    <!-- Mode toggle: Memorization vs Check Yourself -->
+    <div class="mode-toggle" role="group" aria-label="Mode selection">
+      <button id="mode-memorize" class="mode-btn active">Memorization</button>
+      <button id="mode-check"    class="mode-btn">Check Yourself!</button>
+    </div>
+
+    <!-- Collapsible instructions — expanded for first-time visitors -->
+    <details id="instructions" class="instructions-section">
+      <summary>Instructions</summary>
+      <div class="instructions-content">
+        <p id="instructions-text"></p>
+        <p class="attribution">
+          Based on the method of Dr. Andrew Davis, author of
+          <em>An Approach to Extended Memorization of Scripture</em>.
+        </p>
+      </div>
+    </details>
+
+    <!-- Navigation and hide/show controls — above the verse card so button
+         positions never shift when the card resizes on Hide/Show -->
+    <div class="controls">
+      <button id="prev-btn"      class="btn btn-secondary">&#8592; Previous</button>
+      <button id="hide-show-btn" class="btn btn-primary">Hide</button>
+      <button id="next-btn"      class="btn btn-secondary">Next &#8594;</button>
+    </div>
+
+    <!-- Verse display -->
+    <div class="verse-card">
+      <div id="verse-reference"   class="verse-reference"></div>
+      <div id="verse-text"        class="verse-text"></div>
+      <div id="verse-translation" class="verse-translation"></div>
+    </div>
+
+    <!-- Shown when the user clicks Next on the last verse -->
+    <div id="end-message" class="end-message hidden">
+      You've reached the end! Great work.
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
